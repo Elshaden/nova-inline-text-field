@@ -26,7 +26,7 @@ class NovaInlineTextFieldController extends Controller
         try {
             $model = $request->model()->find($modelId);
            
-            $model->{$attribute} = $request->value;
+             $model->{$attribute} = $request->input($attribute);
             $model->save();
             
           //  $resource = new $resourceClass($model);
