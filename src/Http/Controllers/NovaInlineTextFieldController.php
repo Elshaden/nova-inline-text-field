@@ -25,15 +25,19 @@ class NovaInlineTextFieldController extends Controller
         // Find field in question
         try {
             $model = $request->model()->find($modelId);
-            $resource = new $resourceClass($model);
-
-            $allFields = collect($resource->fields($request));
-            $field = $allFields->first(function ($field) use ($attribute) {
-                return get_class($field) === InlineText::class && $field->attribute === $attribute;
-            });
-
-            $field->fillInto($request, $model, $attribute);
+           
+            $model->{$attribute} = $request->value;
             $model->save();
+            
+          //  $resource = new $resourceClass($model);
+
+         //   $allFields = collect($resource->fields($request));
+         //   $field = $allFields->first(function ($field) use ($attribute) {
+         //       return get_class($field) === InlineText::class && $field->attribute === $attribute;
+         //   });
+
+          //  $field->fillInto($request, $model, $attribute);
+          //  $model->save();
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
